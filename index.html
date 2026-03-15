@@ -1,0 +1,733 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Aadityananda Jha — Structural Engineer</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0d0f0e;
+      --surface: #141614;
+      --accent: #b8e04a;
+      --accent2: #4abbe0;
+      --text: #e8ebe6;
+      --muted: #707870;
+      --border: #252725;
+      --font-display: 'Playfair Display', Georgia, serif;
+      --font-mono: 'DM Mono', 'Courier New', monospace;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-mono);
+      font-size: 14px;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    /* Noise texture overlay */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 9999;
+      opacity: 0.5;
+    }
+
+    /* ── NAVIGATION ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.2rem 3rem;
+      border-bottom: 1px solid var(--border);
+      background: rgba(13,15,14,0.85);
+      backdrop-filter: blur(12px);
+    }
+
+    .nav-logo {
+      font-family: var(--font-display);
+      font-size: 1.1rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: var(--text);
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.78rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--accent); }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      padding: 0 3rem;
+      padding-top: 80px;
+      gap: 2rem;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::after {
+      content: '';
+      position: absolute;
+      right: -200px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 700px;
+      height: 700px;
+      background: radial-gradient(circle, rgba(184,224,74,0.06) 0%, transparent 65%);
+      pointer-events: none;
+    }
+
+    .hero-tag {
+      font-size: 0.72rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.7rem;
+    }
+
+    .hero-tag::before {
+      content: '';
+      display: inline-block;
+      width: 32px;
+      height: 1px;
+      background: var(--accent);
+    }
+
+    .hero-name {
+      font-family: var(--font-display);
+      font-size: clamp(3.5rem, 7vw, 6rem);
+      font-weight: 900;
+      line-height: 0.95;
+      letter-spacing: -0.03em;
+      color: var(--text);
+      margin-bottom: 1.5rem;
+    }
+
+    .hero-name span {
+      color: var(--accent);
+      display: block;
+    }
+
+    .hero-desc {
+      color: var(--muted);
+      font-size: 0.88rem;
+      max-width: 420px;
+      margin-bottom: 2.5rem;
+      line-height: 1.8;
+    }
+
+    .hero-cta {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      padding: 0.75rem 1.8rem;
+      border: none;
+      cursor: pointer;
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: all 0.2s;
+      display: inline-block;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: var(--bg);
+      font-weight: 500;
+    }
+
+    .btn-primary:hover {
+      background: #cef060;
+      transform: translateY(-2px);
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--text);
+      border: 1px solid var(--border);
+    }
+
+    .btn-outline:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    /* Hero right panel */
+    .hero-right {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+    }
+
+    .hero-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      padding: 2rem;
+      width: 100%;
+      max-width: 380px;
+      position: relative;
+    }
+
+    .hero-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%;
+      height: 3px;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+    }
+
+    .card-label {
+      font-size: 0.68rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 1.5rem;
+    }
+
+    .stat-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 0.9rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .stat-row:last-child { border-bottom: none; }
+
+    .stat-label { color: var(--muted); font-size: 0.78rem; }
+
+    .stat-value {
+      color: var(--accent);
+      font-weight: 500;
+      font-size: 0.82rem;
+    }
+
+    /* ── SECTIONS ── */
+    section {
+      padding: 6rem 3rem;
+      border-top: 1px solid var(--border);
+    }
+
+    .section-header {
+      display: flex;
+      align-items: baseline;
+      gap: 1.5rem;
+      margin-bottom: 4rem;
+    }
+
+    .section-num {
+      font-size: 0.68rem;
+      letter-spacing: 0.15em;
+      color: var(--accent);
+      text-transform: uppercase;
+    }
+
+    .section-title {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: var(--text);
+    }
+
+    /* ── ABOUT ── */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: start;
+    }
+
+    .about-text p {
+      color: var(--muted);
+      margin-bottom: 1.2rem;
+      font-size: 0.88rem;
+      line-height: 1.9;
+    }
+
+    .about-text p strong { color: var(--text); font-weight: 500; }
+
+    .skills-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.6rem;
+    }
+
+    .skill-chip {
+      padding: 0.55rem 1rem;
+      border: 1px solid var(--border);
+      font-size: 0.75rem;
+      color: var(--muted);
+      letter-spacing: 0.05em;
+      transition: all 0.2s;
+    }
+
+    .skill-chip:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    /* ── PROJECTS ── */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .project-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      padding: 2rem;
+      transition: border-color 0.2s, transform 0.2s;
+      cursor: default;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .project-card::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0;
+      width: 0; height: 2px;
+      background: var(--accent);
+      transition: width 0.3s;
+    }
+
+    .project-card:hover { border-color: var(--border); transform: translateY(-4px); }
+    .project-card:hover::after { width: 100%; }
+
+    .project-type {
+      font-size: 0.68rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--accent2);
+      margin-bottom: 1rem;
+    }
+
+    .project-title {
+      font-family: var(--font-display);
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 0.75rem;
+      letter-spacing: -0.01em;
+    }
+
+    .project-desc {
+      color: var(--muted);
+      font-size: 0.82rem;
+      line-height: 1.8;
+      margin-bottom: 1.5rem;
+    }
+
+    .project-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .tag {
+      font-size: 0.68rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.3rem 0.7rem;
+      background: rgba(184,224,74,0.08);
+      color: var(--accent);
+      border: 1px solid rgba(184,224,74,0.2);
+    }
+
+    /* ── EXPERIENCE ── */
+    .exp-list { display: flex; flex-direction: column; gap: 0; }
+
+    .exp-item {
+      display: grid;
+      grid-template-columns: 180px 1fr;
+      gap: 3rem;
+      padding: 2.5rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .exp-item:first-child { border-top: 1px solid var(--border); }
+
+    .exp-period {
+      font-size: 0.75rem;
+      color: var(--muted);
+      letter-spacing: 0.05em;
+      padding-top: 0.2rem;
+    }
+
+    .exp-role {
+      font-family: var(--font-display);
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 0.3rem;
+    }
+
+    .exp-company {
+      font-size: 0.78rem;
+      color: var(--accent);
+      margin-bottom: 0.8rem;
+      letter-spacing: 0.05em;
+    }
+
+    .exp-desc {
+      color: var(--muted);
+      font-size: 0.82rem;
+      line-height: 1.8;
+    }
+
+    /* ── CONTACT ── */
+    .contact-inner {
+      max-width: 680px;
+    }
+
+    .contact-lead {
+      font-family: var(--font-display);
+      font-size: clamp(1.8rem, 3vw, 2.5rem);
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 1.5rem;
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+    }
+
+    .contact-lead span { color: var(--accent); }
+
+    .contact-desc {
+      color: var(--muted);
+      font-size: 0.88rem;
+      margin-bottom: 2.5rem;
+      line-height: 1.8;
+    }
+
+    .contact-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .contact-link {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      padding: 0.8rem 1.5rem;
+      border: 1px solid var(--border);
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.78rem;
+      letter-spacing: 0.08em;
+      transition: all 0.2s;
+    }
+
+    .contact-link:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      padding: 2rem 3rem;
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    footer p {
+      color: var(--muted);
+      font-size: 0.75rem;
+      letter-spacing: 0.05em;
+    }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(28px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .hero-tag    { animation: fadeUp 0.6s ease both; animation-delay: 0.1s; }
+    .hero-name   { animation: fadeUp 0.6s ease both; animation-delay: 0.2s; }
+    .hero-desc   { animation: fadeUp 0.6s ease both; animation-delay: 0.35s; }
+    .hero-cta    { animation: fadeUp 0.6s ease both; animation-delay: 0.5s; }
+    .hero-right  { animation: fadeUp 0.7s ease both; animation-delay: 0.4s; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      nav { padding: 1rem 1.5rem; }
+      .nav-links { display: none; }
+      .hero { grid-template-columns: 1fr; padding: 6rem 1.5rem 3rem; }
+      .hero-right { justify-content: flex-start; }
+      .about-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+      .exp-item { grid-template-columns: 1fr; gap: 0.5rem; }
+      section { padding: 4rem 1.5rem; }
+      footer { flex-direction: column; gap: 1rem; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a href="#" class="nav-logo">Aadityananda Jha</a>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero" id="home">
+    <div class="hero-left">
+      <div class="hero-tag">Structural Engineer · Nepal</div>
+      <h1 class="hero-name">
+        Aadityananda<span>Jha</span>
+      </h1>
+      <p class="hero-desc">
+        M.Sc. Structural Engineering candidate at Pulchowk Campus (IOE).
+        Specializing in seismic performance of RC frames, nonlinear analysis,
+        and computational design tools.
+      </p>
+      <div class="hero-cta">
+        <a href="#projects" class="btn btn-primary">View Projects</a>
+        <a href="#contact" class="btn btn-outline">Get in Touch</a>
+      </div>
+    </div>
+
+    <div class="hero-right">
+      <div class="hero-card">
+        <div class="card-label">// Current Status</div>
+        <div class="stat-row">
+          <span class="stat-label">Degree</span>
+          <span class="stat-value">M.Sc. Structural Engg.</span>
+        </div>
+        <div class="stat-row">
+          <span class="stat-label">Institution</span>
+          <span class="stat-value">Pulchowk Campus, IOE</span>
+        </div>
+        <div class="stat-row">
+          <span class="stat-label">License</span>
+          <span class="stat-value">NEC Licensed Engineer</span>
+        </div>
+        <div class="stat-row">
+          <span class="stat-label">Location</span>
+          <span class="stat-value">Kathmandu, Nepal</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="section-header">
+      <span class="section-num">01 —</span>
+      <h2 class="section-title">About</h2>
+    </div>
+    <div class="about-grid">
+      <div class="about-text">
+        <p>
+          I'm a civil engineer and master's student specializing in structural engineering,
+          with a focus on <strong>seismic performance assessment</strong> of reinforced concrete
+          structures in Nepal's high-risk seismic zone.
+        </p>
+        <p>
+          Beyond analysis, I build <strong>Python-based tools</strong> to automate structural design
+          checks per IS 456 and IS 13920 — bridging the gap between code provisions and
+          practical engineering workflows. I'm multilingual (Nepali, English, Hindi, Maithali)
+          and enjoy teaching as much as building.
+        </p>
+      </div>
+      <div>
+        <div style="font-size:0.72rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:1.2rem;">Technical Stack</div>
+        <div class="skills-grid">
+          <div class="skill-chip">ETABS</div>
+          <div class="skill-chip">SAP2000</div>
+          <div class="skill-chip">SAFE</div>
+          <div class="skill-chip">AutoCAD</div>
+          <div class="skill-chip">Python</div>
+          <div class="skill-chip">COM API</div>
+          <div class="skill-chip">IS 456:2000</div>
+          <div class="skill-chip">IS 13920</div>
+          <div class="skill-chip">IS 1893:2016</div>
+          <div class="skill-chip">NBC 105:2020</div>
+          <div class="skill-chip">ATC-40</div>
+          <div class="skill-chip">FEMA P-695</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section id="projects">
+    <div class="section-header">
+      <span class="section-num">02 —</span>
+      <h2 class="section-title">Projects</h2>
+    </div>
+    <div class="projects-grid">
+
+      <div class="project-card">
+        <div class="project-type">Software Tool</div>
+        <div class="project-title">RC Beam Design Automation (Python/Tkinter)</div>
+        <p class="project-desc">
+          Desktop application for singly/doubly reinforced beam design, shear-torsion checks
+          per IS 456 Clause 41, capacity moment back-calculation, and IS 13920 Clause 6.3.3
+          four-shear-value display. Automates ETABS Excel output extraction.
+        </p>
+        <div class="project-tags">
+          <span class="tag">Python</span>
+          <span class="tag">Tkinter</span>
+          <span class="tag">IS 456</span>
+          <span class="tag">IS 13920</span>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <div class="project-type">Research · Habitat for Humanity</div>
+        <div class="project-title">Bamboo Wall Panel Prefabrication</div>
+        <p class="project-desc">
+          Shear capacity testing of bamboo wall panels across three treatment variants —
+          no plaster, cement plaster with wire mesh, lime plaster with wire mesh —
+          with nine specimens. Documentation and structural modeling at Pulchowk Campus.
+        </p>
+        <div class="project-tags">
+          <span class="tag">Bamboo</span>
+          <span class="tag">Prefab</span>
+          <span class="tag">Shear Test</span>
+          <span class="tag">Low-cost Housing</span>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <div class="project-type">Practice · MATE Engineering</div>
+        <div class="project-title">Building Design & Structural Analysis</div>
+        <p class="project-desc">
+          Residential and commercial building design per Nepal Building Code in Kathmandu Valley.
+          Structural analysis, detailing, and drawing production using ETABS, SAFE, and AutoCAD.
+          Compliance with NBC 105:2020 seismic provisions.
+        </p>
+        <div class="project-tags">
+          <span class="tag">NBC 105</span>
+          <span class="tag">ETABS</span>
+          <span class="tag">SAFE</span>
+          <span class="tag">AutoCAD</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- EXPERIENCE -->
+  <section id="experience">
+    <div class="section-header">
+      <span class="section-num">03 —</span>
+      <h2 class="section-title">Experience</h2>
+    </div>
+    <div class="exp-list">
+
+      <div class="exp-item">
+        <div class="exp-period">2023 — Present</div>
+        <div>
+          <div class="exp-role">M.Sc. Structural Engineering</div>
+          <div class="exp-company">Pulchowk Campus, Institute of Engineering · Lalitpur</div>
+          <p class="exp-desc">
+            Graduate studies in advanced structural analysis, earthquake engineering, and finite element methods.
+          </p>
+        </div>
+      </div>
+
+      <div class="exp-item">
+        <div class="exp-period">2022 — 2023</div>
+        <div>
+          <div class="exp-role">Structural Engineer</div>
+          <div class="exp-company">MATE Engineering Solutions · Kathmandu</div>
+          <p class="exp-desc">
+            Building design and structural analysis for residential and commercial projects.
+            Led bamboo panel prefabrication research in collaboration with Habitat for Humanity International.
+          </p>
+        </div>
+      </div>
+
+      <div class="exp-item">
+        <div class="exp-period">2021 — 2022</div>
+        <div>
+          <div class="exp-role">Lecturer (Part-time)</div>
+          <div class="exp-company">Hillside College of Engineering · Kathmandu</div>
+          <p class="exp-desc">
+            Taught undergraduate structural engineering subjects including RCC design, structural analysis,
+            and IS code applications to civil engineering students.
+          </p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="contact-inner">
+      <div class="section-header">
+        <span class="section-num">04 —</span>
+        <h2 class="section-title">Contact</h2>
+      </div>
+      <p class="contact-lead">Let's build something <span>structurally sound</span> together.</p>
+      <p class="contact-desc">
+        Whether it's a structural project, research collaboration, or just a conversation
+        about earthquake engineering in Nepal — feel free to reach out.
+      </p>
+      <div class="contact-links">
+        <a href="mailto:your@email.com" class="contact-link">✉ Email</a>
+        <a href="https://aadityanandajha.com" target="_blank" class="contact-link">🌐 Portfolio</a>
+        <a href="https://linkedin.com/in/yourprofile" target="_blank" class="contact-link">in LinkedIn</a>
+        <a href="https://github.com/yourusername" target="_blank" class="contact-link">⌥ GitHub</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>© 2026 Aadityananda Jha · Structural Engineer</p>
+    <p>Kathmandu, Nepal · NEC Licensed</p>
+  </footer>
+
+</body>
+</html>
